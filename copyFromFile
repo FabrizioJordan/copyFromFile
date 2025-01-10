@@ -1,0 +1,19 @@
+#!/bin/bash
+
+
+echo "Se deben pasar tres argumentos cómo mínimo"
+echo -e "Se debe pasar, 1. La primera línea, 2. La última línea y 3.El archivo"
+
+echo ""
+
+if [ $# -ge 3 ]; then
+	if [[ -f $3 ]]; then
+		sed -n "$1,$2p" $3 | xclip -selection clipboard
+	else
+		echo "No se ha podido detectar o encontrar el archivo. Operación cancelada."
+	fi
+else
+	echo "Menos de tres parametros fueron pasados. Operación cancelada."
+fi
+
+#existen dos archivos para este script, cpfromfile (este) y copyFromFile
