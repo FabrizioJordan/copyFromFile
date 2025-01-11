@@ -2,7 +2,7 @@
 
 
 echo "Se deben pasar tres argumentos cómo mínimo"
-echo -e "Se debe pasar, 1. La primera línea, 2. La última línea y 3.El archivo"
+echo -e "1. La línea inicial, 2. La línea final y 3. El archivo a copiar"
 
 echo ""
 
@@ -16,4 +16,4 @@ else
 	echo "Menos de tres parametros fueron pasados. Operación cancelada."
 fi
 
-#existen dos archivos para este script, cpfromfile (este) y copyFromFile
+# se recomienda que se cree un alias para este script, cpff como alias de copyFromFile
