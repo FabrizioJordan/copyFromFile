@@ -1,19 +1,30 @@
 #!/bin/bash
 
+echo "At least three arguments must be provided."
 
-echo "Se deben pasar tres argumentos cómo mínimo"
-echo -e "1. La línea inicial, 2. La línea final y 3. El archivo a copiar"
+echo -e "1. The starting line, 2. The ending line, and 3. The file to copy from."
+
 
 echo ""
 
 if [ $# -ge 3 ]; then
+	# validations:
+
+	# is the 1st and 2nd args nums?
+	if ! [[ $1 =~ ^[0-9]+$ ]] || ! [[ $2 =~ ^[0-9]+$ ]]; then
+        	echo "The starting and ending lines must be numeric values. Operation canceled."
+        	exit 1
+    	fi
+
+	# is the 3rd arg a file?
 	if [[ -f $3 ]]; then
 		sed -n "$1,$2p" $3 | xclip -selection clipboard
+		echo "Content copied from line $1 to $2 of $3."
 	else
-		echo "No se ha podido detectar o encontrar el archivo. Operación cancelada."
+		echo "The file could not be detected or found. Operation canceled."
 	fi
 else
-	echo "Menos de tres parametros fueron pasados. Operación cancelada."
+	echo "Fewer than three arguments were provided. Operation canceled."
 fi
 
-# se recomienda que se cree un alias para este script, cpff como alias de copyFromFile
+# It is recommended to create an alias for this script, such as 'cpff'.
