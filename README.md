@@ -50,7 +50,7 @@ git clone https://github.com/FabrizioJordan/copyFromFile.git && cd copyFromFile
 
 
 ```
-chmod +x copyFromFile && cp copyFromFile /usr/local/bin
+chmod +x copyFromFile && sudo cp copyFromFile /usr/local/bin
 ```
 	
 
