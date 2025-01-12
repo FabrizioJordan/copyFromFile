@@ -1,10 +1,5 @@
 #!/bin/bash
 
-echo "At least three arguments must be provided."
-
-echo -e "1. The starting line, 2. The ending line, and 3. The file to copy from."
-
-
 echo ""
 
 if [ $# -ge 3 ]; then
@@ -23,8 +18,32 @@ if [ $# -ge 3 ]; then
 	else
 		echo "The file could not be detected or found. Operation canceled."
 	fi
-else
-	echo "Fewer than three arguments were provided. Operation canceled."
 fi
+
+if [[ $# -ge 1 && $# -lt 3 ]]; then
+	echo "Help:"
+	echo "Usage: copyFromFile <start_line> <end_line> <file>"
+   	echo "Copies lines from <start_line> to <end_line> in <file> to the clipboard."
+	echo ""
+	echo "You need to use three arguments"
+	echo ""
+    	exit 1
+fi
+
+
+if [[ $# -eq 0 || $1 == "--help" ]]; then
+	echo "Help:"
+	echo "Usage: copyFromFile <start_line> <end_line> <file>"
+   	echo "Copies lines from <start_line> to <end_line> in <file> to the clipboard."
+    	exit 0
+fi
+
+if ! command -v xclip &> /dev/null; then
+    echo "xclip is not installed. Please install it first."
+    exit 1
+fi
+
+
+echo ""
 
 # It is recommended to create an alias for this script, such as 'cpff'.
