@@ -57,11 +57,11 @@ chmod +x copyFromFile && sudo cp copyFromFile /usr/local/bin
 
 But if you want a shorter command, you can create a alias like ```cpff``` or ```cpFromFile```.
 
-Or you can run this command:
+Or you can run this command (to create a Symlink):
 
 
 ```
-sudo cp copyFromFile /usr/local/bin/cpff
+ln -s copyFromFile /usr/local/bin/cpff
 ```
 
 
