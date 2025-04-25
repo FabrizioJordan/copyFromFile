@@ -59,7 +59,7 @@ Or you can run this command (to create a Symlink):
 
 
 ```
-sudo ln -s copyFromFile /usr/local/bin/cpff
+sudo ln -s /usr/local/bin/copyFromFile /usr/local/bin/cpff
 ```
 
 
