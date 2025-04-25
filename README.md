@@ -48,12 +48,10 @@ Clone the repo and set up the script:
 git clone https://github.com/FabrizioJordan/copyFromFile.git && cd copyFromFile
 ```
 
-
 ```
 chmod +x copyFromFile && sudo cp copyFromFile /usr/local/bin
 ```
 	
-
 
 But if you want a shorter command, you can create a alias like ```cpff``` or ```cpFromFile```.
 
@@ -62,6 +60,17 @@ Or you can run this command (to create a Symlink):
 
 ```
 sudo ln -s copyFromFile /usr/local/bin/cpff
+```
+
+
+## How to update
+
+Update is so easy
+
+Only run this command:
+
+```
+git clone https://github.com/FabrizioJordan/copyFromFile.git && cd copyFromFile && sudo cp copyFromFile /usr/local/bin/copyFromFile && cd .. && rm -f copyFromFile
 ```
 
 
