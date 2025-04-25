@@ -21,21 +21,30 @@ if [ $# -ge 3 ]; then
 fi
 
 if [[ $# -ge 1 && $# -lt 3 ]]; then
-	echo "Help:"
-	echo "Usage: copyFromFile <start_line> <end_line> <file>"
-   	echo "Copies lines from <start_line> to <end_line> in <file> to the clipboard."
-	echo ""
-	echo "You need to use three arguments"
-	echo ""
+	echo -e "\Error."
+
+	echo -e "Use 'copyFromFile --help' to display the Help guide. "
+    	echo -e "And remember:"
+	echo -e "You need to use three arguments.\n"
     	exit 1
 fi
 
 
 if [[ $# -eq 0 || $1 == "--help" ]]; then
-	echo "Help:"
-	echo "Usage: copyFromFile <start_line> <end_line> <file>"
-   	echo "Copies lines from <start_line> to <end_line> in <file> to the clipboard."
-    	exit 0
+	echo -e "\e[1mHelp\n\e[0m"
+
+	echo -e "This script copies lines from a file to your clipboard using 'xclip'.\n"
+
+	echo -e "\e[4m\e[1mUsage:\e[0m"
+    	echo -e "  \e[4mcopyFromFile [START_LINE] [END_LINE] [FILE]\e[0m\n"
+
+   	echo -e "Copies lines from <start_line> to <end_line> in <file> to the clipboard.\n"
+
+	echo -e "\e[4m\e[1mExample:\e[0m\n"
+    	echo -e "  \e[1mcopyFromFile 10 30 file.txt\e[0m\n"
+    	echo -e "OR\n"
+    	echo -e "  \e[1mcpff 10 30 file.txt\e[0m\n"
+	exit 0
 fi
 
 if ! command -v xclip &> /dev/null; then
