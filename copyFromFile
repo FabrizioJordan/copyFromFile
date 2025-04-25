@@ -1,5 +1,14 @@
 #!/bin/bash
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+ORANGE='\033[0;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+WHITE='\033[0;37m'
+NC='\033[0m' # no color
+
+
 echo ""
 
 if [ $# -ge 3 ]; then
@@ -21,9 +30,10 @@ if [ $# -ge 3 ]; then
 fi
 
 if [[ $# -ge 1 && $# -lt 3 ]]; then
-	echo -e "\Error."
+	echo -e "${RED}\e[1mError.${NC}\n"
 
-	echo -e "Use 'copyFromFile --help' to display the Help guide. "
+	echo -e "Use 'copyFromFile --help' to display the Help guide.\n"
+
     	echo -e "And remember:"
 	echo -e "You need to use three arguments.\n"
     	exit 1
