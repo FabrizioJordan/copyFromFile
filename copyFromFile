@@ -29,8 +29,8 @@ fi
 
 
 if [[ $# -eq 1 || $1 == "--update" ]]; then
-	echo -e "The Update starts at" + date +"%H:%M:%S"
-	echo -e "\e[1mUpdating...\n\e[0m"
+	#echo -e "The Update starts at" + date +"%H:%M:%S"
+	#echo -e "\e[1mUpdating...\n\e[0m"
 
 	sleep 1
 
@@ -38,9 +38,10 @@ if [[ $# -eq 1 || $1 == "--update" ]]; then
 	cd copyFromFile
 	sudo cp copyFromFile /usr/local/bin/copyFromFile
 	cd ..
-	rm -f copyFromFile
+	rm -r copyFromFile
 
-	echo -e "The Update ends at" + date +"%H:%M:%S"
+	#echo -e "The Update ends at"
+	#echo -e date +"%H:%M:%S"
 
 	exit 0
 fi
