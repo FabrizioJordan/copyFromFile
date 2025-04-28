@@ -1,5 +1,7 @@
 #!/bin/bash
 
+VERSION="2.0.0"
+
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 ORANGE='\033[0;33m'
@@ -16,7 +18,7 @@ fi
 
 
 print_help(){
-	echo -e "\e[1mHelp\n\e[0m"
+	echo -e "${BLUE}\e[1mHelp\n\e[0m${NC}"
 
 	echo -e "This script copies lines from a file to your clipboard using 'xclip'.\n"
 
@@ -32,7 +34,7 @@ print_help(){
 }
 
 update_func(){
-	echo -e "The Update starts at $(date +"%H:%M:%S")"
+	echo -e "${GREEN}⏰ The Update starts at: ${BLUE}$(date +"%H:%M:%S")${NC}\n"
 	echo -e "\e[1mUpdating...\n\e[0m"
 
 	sleep 1
@@ -43,9 +45,13 @@ update_func(){
 	cd ..
 	rm -rf copyFromFile
 
-	#echo -e "The Update ends at $(date +"%H:%M:%S")"
+	# Show End of update
+	echo -e "\n${GREEN}✅ The Update ends at: ${BLUE}$(date +"%H:%M:%S")${NC}\n"
 }
 
+print_version(){
+	echo -e "copyFromFile version $VERSION"
+}
 
 case "$1" in
 	-h | --help)
@@ -54,6 +60,10 @@ case "$1" in
 	;;
 	-u | --update)
 		update_func
+		exit 0
+	;;
+	-v | --version)
+		print_version
 		exit 0
 	;;
 esac
@@ -89,9 +99,9 @@ if [ $# -ge 3 ]; then
 	# is the 3rd arg a file?
 	if [[ -f $3 ]]; then
 		sed -n "$1,$2p" $3 | xclip -selection clipboard
-		echo "Content copied from line $1 to $2 of $3."
+		echo -e "${GREEN}Content copied from line $1 to $2 of $3.${NC}"
 	else
-		echo "The file could not be detected or found. Operation canceled."
+		echo -e "${RED}The file could not be detected or found. Operation canceled.${NC}"
 	fi
 fi
 
