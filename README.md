@@ -7,7 +7,7 @@ A simple script to copy content from a file, specifying a starting and an ending
 ## Requirements
 
 1. Root privileges.
-2. ```sed``` and ```xclip``` (and git if you want to clone the repo).
+2. ```sed``` and ```xclip``` (and ```git``` if you want to clone the repo).
 
 	The ```sed``` package is commonly pre-installed in the Linux distros.
 
@@ -113,6 +113,16 @@ If you created an alias, you can use it in the same way:
 ```
 cpff 10 30 file.txt
 ```
+
+### All arguments
+
+```--help```: Shows the help menu
+
+```--update```: Updates the program
+
+```--version```: Shows the actual version of the program
+
+
 ## Uninstallation
 
 During installation, the script is copied to /usr/local/bin. If you wish to uninstall it, follow these steps:
