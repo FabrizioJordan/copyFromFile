@@ -67,6 +67,15 @@ sudo ln -s /usr/local/bin/copyFromFile /usr/local/bin/cpff
 
 Update is so easy
 
+Now you have two options
+
+Using an argument with the command ->
+Like this:
+```
+copyFromFile --update
+```
+
+From the terminal ->
 Only run this command:
 
 ```
