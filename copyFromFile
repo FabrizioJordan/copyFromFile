@@ -8,9 +8,6 @@ CYAN='\033[0;36m'
 WHITE='\033[0;37m'
 NC='\033[0m' # no color
 
-
-echo ""
-
 if [ $# -ge 3 ]; then
 	# validations:
 
@@ -54,6 +51,23 @@ if [[ $# -eq 0 || $1 == "--help" ]]; then
     	echo -e "  \e[1mcopyFromFile 10 30 file.txt\e[0m\n"
     	echo -e "OR\n"
     	echo -e "  \e[1mcpff 10 30 file.txt\e[0m\n"
+	exit 0
+fi
+
+if [[ $# -eq 0 || $1 == "--update" ]]; then
+	echo -e "The Update starts at" + date +"%H:%M:%S"
+	echo -e "\e[1mUpdating...\n\e[0m"
+
+	sleep 1
+
+	git clone https://github.com/FabrizioJordan/copyFromFile.git
+	cd copyFromFile
+	sudo cp copyFromFile /usr/local/bin/copyFromFile
+	cd ..
+	rm -f copyFromFile
+
+	echo -e "The Update ends at" + date +"%H:%M:%S"
+
 	exit 0
 fi
 
