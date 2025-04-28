@@ -8,6 +8,46 @@ CYAN='\033[0;36m'
 WHITE='\033[0;37m'
 NC='\033[0m' # no color
 
+
+if [[ $1 == "--help" ]]; then
+	echo -e "\e[1mHelp\n\e[0m"
+
+	echo -e "This script copies lines from a file to your clipboard using 'xclip'.\n"
+
+	echo -e "\e[4m\e[1mUsage:\e[0m"
+    	echo -e "  \e[4mcopyFromFile [START_LINE] [END_LINE] [FILE]\e[0m\n"
+
+   	echo -e "Copies lines from <start_line> to <end_line> in <file> to the clipboard.\n"
+
+	echo -e "\e[4m\e[1mExample:\e[0m\n"
+    	echo -e "  \e[1mcopyFromFile 10 30 file.txt\e[0m\n"
+    	echo -e "OR\n"
+    	echo -e "  \e[1mcpff 10 30 file.txt\e[0m\n"
+	exit 0
+fi
+
+
+
+if [[ $# -eq 1 || $1 == "--update" ]]; then
+	echo -e "The Update starts at" + date +"%H:%M:%S"
+	echo -e "\e[1mUpdating...\n\e[0m"
+
+	sleep 1
+
+	git clone https://github.com/FabrizioJordan/copyFromFile.git
+	cd copyFromFile
+	sudo cp copyFromFile /usr/local/bin/copyFromFile
+	cd ..
+	rm -f copyFromFile
+
+	echo -e "The Update ends at" + date +"%H:%M:%S"
+
+	exit 0
+fi
+
+## Arguments
+
+
 if [ $# -ge 3 ]; then
 	# validations:
 
@@ -34,41 +74,6 @@ if [[ $# -ge 1 && $# -lt 3 ]]; then
     	echo -e "And remember:"
 	echo -e "You need to use three arguments.\n"
     	exit 1
-fi
-
-
-if [[ $# -eq 0 || $1 == "--help" ]]; then
-	echo -e "\e[1mHelp\n\e[0m"
-
-	echo -e "This script copies lines from a file to your clipboard using 'xclip'.\n"
-
-	echo -e "\e[4m\e[1mUsage:\e[0m"
-    	echo -e "  \e[4mcopyFromFile [START_LINE] [END_LINE] [FILE]\e[0m\n"
-
-   	echo -e "Copies lines from <start_line> to <end_line> in <file> to the clipboard.\n"
-
-	echo -e "\e[4m\e[1mExample:\e[0m\n"
-    	echo -e "  \e[1mcopyFromFile 10 30 file.txt\e[0m\n"
-    	echo -e "OR\n"
-    	echo -e "  \e[1mcpff 10 30 file.txt\e[0m\n"
-	exit 0
-fi
-
-if [[ $# -eq 0 || $1 == "--update" ]]; then
-	echo -e "The Update starts at" + date +"%H:%M:%S"
-	echo -e "\e[1mUpdating...\n\e[0m"
-
-	sleep 1
-
-	git clone https://github.com/FabrizioJordan/copyFromFile.git
-	cd copyFromFile
-	sudo cp copyFromFile /usr/local/bin/copyFromFile
-	cd ..
-	rm -f copyFromFile
-
-	echo -e "The Update ends at" + date +"%H:%M:%S"
-
-	exit 0
 fi
 
 if ! command -v xclip &> /dev/null; then
