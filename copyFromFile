@@ -9,7 +9,13 @@ WHITE='\033[0;37m'
 NC='\033[0m' # no color
 
 
-if [[ $1 == "--help" ]]; then
+if ! command -v xclip &> /dev/null; then
+    echo "xclip is not installed. Please install it first."
+    exit 1
+fi
+
+
+print_help(){
 	echo -e "\e[1mHelp\n\e[0m"
 
 	echo -e "This script copies lines from a file to your clipboard using 'xclip'.\n"
@@ -23,14 +29,11 @@ if [[ $1 == "--help" ]]; then
     	echo -e "  \e[1mcopyFromFile 10 30 file.txt\e[0m\n"
     	echo -e "OR\n"
     	echo -e "  \e[1mcpff 10 30 file.txt\e[0m\n"
-	exit 0
-fi
+}
 
-
-
-if [[ $# -eq 1 || $1 == "--update" ]]; then
-	#echo -e "The Update starts at" + date +"%H:%M:%S"
-	#echo -e "\e[1mUpdating...\n\e[0m"
+update_func(){
+	echo -e "The Update starts at $(date +"%H:%M:%S")"
+	echo -e "\e[1mUpdating...\n\e[0m"
 
 	sleep 1
 
@@ -38,13 +41,33 @@ if [[ $# -eq 1 || $1 == "--update" ]]; then
 	cd copyFromFile
 	sudo cp copyFromFile /usr/local/bin/copyFromFile
 	cd ..
-	rm -r copyFromFile
+	rm -rf copyFromFile
 
-	#echo -e "The Update ends at"
-	#echo -e date +"%H:%M:%S"
+	#echo -e "The Update ends at $(date +"%H:%M:%S")"
+}
 
-	exit 0
-fi
+
+case "$1" in
+	-h | --help)
+		print_help
+		exit 0
+	;;
+	-u | --update)
+		update_func
+		exit 0
+	;;
+esac
+
+#if [[ $1 == "--help" ]]; then
+#	print_help
+#	exit 0
+#fi
+
+
+
+#if [[ $# -eq 1 || $1 == "--update" ]]; then
+#	exit 0
+#fi
 
 ## Arguments
 
@@ -54,7 +77,12 @@ if [ $# -ge 3 ]; then
 
 	# is the 1st and 2nd args nums?
 	if ! [[ $1 =~ ^[0-9]+$ ]] || ! [[ $2 =~ ^[0-9]+$ ]]; then
-        	echo "The starting and ending lines must be numeric values. Operation canceled."
+		echo -e "${RED}\e[1mError.${NC}\n"
+
+		echo -e "Use 'copyFromFile --help' to display the Help guide.\n"
+
+		echo -e "And remember:"
+        	echo -e "The starting and ending lines must be numeric values. Operation canceled."
         	exit 1
     	fi
 
@@ -77,11 +105,10 @@ if [[ $# -ge 1 && $# -lt 3 ]]; then
     	exit 1
 fi
 
-if ! command -v xclip &> /dev/null; then
-    echo "xclip is not installed. Please install it first."
-    exit 1
+if ! [[ $1 =~ ^[0-9]+$ && $2 =~ ^[0-9]+$ ]]; then
+    	echo -e "${RED}Error:${NC} Lines must be numbers."
+    	exit 1
 fi
-
 
 echo ""
 
