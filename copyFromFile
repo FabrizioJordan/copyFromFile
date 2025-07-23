@@ -1,41 +1,92 @@
 #!/bin/bash
 
+#set -x  # Debug Mode, shows every command executed
+
 VERSION="2.0.1"
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-ORANGE='\033[0;33m'
-BLUE='\033[0;34m'
-CYAN='\033[0;36m'
-WHITE='\033[0;37m'
-NC='\033[0m' # no color
+black='\033[0;30m'
+red='\033[0;31m'
+green='\033[0;32m'
+orange='\033[0;33m'
+blue='\033[0;34m'
+magenta='\033[0;35m'
+light_magenta='\033[0;95m'
+cyan='\033[0;36m'
+white='\033[0;37m'
+nc='\033[0m' # no color
+
+normal='\033[0m' # normal
+bold='\033[1m'
+dim='\033[2m'
+italic='\033[3m'
+underline='\033[4m'
+bold_italic="${bold}${italic}"
+
+bold_red='\033[1;31m'
+bold_green='\033[1;32m'
+bold_blue='\033[1;34m'
+italic_blue='\033[3;34m'
+under_blue='\033[4;34m'
 
 
 if ! command -v xclip &> /dev/null; then
-    echo "xclip is not installed. Please install it first."
+    echo -e "${red}xclip is not installed. Please install it first${nc}."
     exit 1
 fi
 
 
 print_help(){
-	echo -e "${BLUE}\e[1mHelp\n\e[0m${NC}"
+	echo -e "${bold_green}CopyFromFile ${nc}-${bold_blue} Help Guide\n${nc}"
 
-	echo -e "This script copies lines from a file to your clipboard using 'xclip'.\n"
 
-	echo -e "\e[4m\e[1mUsage:\e[0m"
-    	echo -e "  \e[4mcopyFromFile [START_LINE] [END_LINE] [FILE]\e[0m\n"
+	echo -e "${bold}DESCRIPTION${nc}"
+	echo -e "	This script copies lines from a file to your clipboard using 'xclip'.\n"
 
-   	echo -e "Copies lines from <start_line> to <end_line> in <file> to the clipboard.\n"
 
-	echo -e "\e[4m\e[1mExample:\e[0m\n"
-    	echo -e "  \e[1mcopyFromFile 10 30 file.txt\e[0m\n"
-    	echo -e "OR\n"
-    	echo -e "  \e[1mcpff 10 30 file.txt\e[0m\n"
+	echo -e "${bold}SYNOPSIS${nc}"
+    	echo -e "	${bold}copyFromFile${nc} [${underline}START_LINE${nc}...] [${underline}END_LINE${nc}...] [${underline}FILE${nc}...]"
+
+    	echo -e "	${bold}copyFromFile -a${nc} [${underline}FILE${nc}...]"
+
+    	echo -e "	${bold}copyFromFile -o${nc} [${underline}LINE${nc}...]  [${underline}FILE${nc}...]\n"
+
+
+	echo -e "${bold}USAGE${nc}"
+	echo -e "   ${bold}Examples:${nc}\n"
+	echo -e "	${underline}Without options:${nc}"
+    	echo -e "	 ${bold}copyFromFile 10 30 file.txt ${nc}\n"
+
+	echo -e "	${underline}With '-a':${nc}"
+    	echo -e "	 ${bold}copyFromFile -a file.txt ${nc}\n"
+
+	echo -e "	${underline}With '-o':${nc}"
+    	echo -e "	 ${bold}copyFromFile -o 5 file.txt ${nc}\n"
+
+	echo -e "${bold}OPTIONS${nc}"
+	echo -e "   Arguments to use with CopyFromFile script:\n"
+	echo -e "${bold}   Generic Program Information${nc}\n"
+
+	echo -e "	${bold}-h | --help${nc}"
+	echo -e "		Shows the help menu"
+
+	echo -e "	${bold}-u | --update${nc}"
+	echo -e "		Updates the program"
+
+	echo -e "	${bold}-v | --version${nc}"
+	echo -e "		Shows the actual version of the program"
+
+	echo -e "\n${bold}   Pattern Syntax${nc}\n"
+
+	echo -e "	${bold}-a | --all${nc}"
+	echo -e "		Copies all of the contents file"
+
+	echo -e "	${bold}-o | --one-line${nc}"
+	echo -e "		Copies only one line of the contents file"
 }
 
 update_func(){
-	echo -e "${GREEN}⏰ The Update starts at: ${BLUE}$(date +"%H:%M:%S")${NC}\n"
-	echo -e "\e[1mUpdating...\n\e[0m"
+	echo -e "\n${green}⏰ The Update starts at: ${blue}$(date +"%H:%M:%S")${nc}\n"
+	echo -e "${bold}Updating...\n${nc}"
 
 	sleep 1
 
@@ -46,12 +97,56 @@ update_func(){
 	rm -rf copyFromFile
 
 	# Show End of update
-	echo -e "\n${GREEN}✅ The Update ends at: ${BLUE}$(date +"%H:%M:%S")${NC}\n"
+	echo -e "\n${green}✅ The Update ends at: ${blue}$(date +"%H:%M:%S")${nc}"
 }
 
 print_version(){
 	echo -e "copyFromFile version $VERSION"
 }
+
+all_lines(){
+	file="$2"
+
+	if ! command -v xclip &> /dev/null; then
+	    echo -e "${red}xclip is not installed. Please install it first${nc}."
+	    exit 1
+	fi
+
+	# is the 2rd arg a file?
+	if [[ -f $file ]];
+	then
+		sed -n '1,$p' "$file" | xclip -selection clipboard
+		echo -e "${green}All content copied from $file${nc}."
+	else
+		echo -e "${red}The file could not be detected or found. Operation canceled.${nc}"
+		exit 1
+	fi
+
+	exit 0
+}
+
+one_line(){
+	line="$2"
+	file="$3"
+
+	if ! command -v xclip &> /dev/null; then
+	    echo -e "${red}xclip is not installed. Please install it first${nc}."
+	    exit 1
+	fi
+
+	# is the 3rd arg a file?
+	if [[ -f $file ]];
+	then
+		sed -n "$line,$line""p" "$file" | xclip -selection clipboard
+		echo -e "${green}Line $line copied from $file${nc}."
+	else
+		echo -e "${red}The file could not be detected or found. Operation canceled.${nc}"
+		exit 1
+	fi
+
+	exit 0
+}
+
 
 case "$1" in
 	-h | --help)
@@ -66,47 +161,46 @@ case "$1" in
 		print_version
 		exit 0
 	;;
+	-a | --all)
+		all_lines $@
+		exit 0
+	;;
+	-o | --one-line)
+		one_line $@
+		exit 0
+	;;
 esac
 
-#if [[ $1 == "--help" ]]; then
-#	print_help
-#	exit 0
-#fi
-
-
-
-#if [[ $# -eq 1 || $1 == "--update" ]]; then
-#	exit 0
-#fi
 
 ## Arguments
-
 
 if [ $# -ge 3 ]; then
 	# validations:
 
 	# is the 1st and 2nd args nums?
 	if ! [[ $1 =~ ^[0-9]+$ ]] || ! [[ $2 =~ ^[0-9]+$ ]]; then
-		echo -e "${RED}\e[1mError.${NC}\n"
+		echo -e "${bold_red}Error.${nc}\n"
 
 		echo -e "Use 'copyFromFile --help' to display the Help guide.\n"
 
 		echo -e "And remember:"
-        	echo -e "The starting and ending lines must be numeric values. Operation canceled."
+        	echo -e "The starting and ending lines must be numeric values.\n"
+
+        	echo -e "This operation was canceled."
         	exit 1
     	fi
 
 	# is the 3rd arg a file?
 	if [[ -f $3 ]]; then
 		sed -n "$1,$2p" $3 | xclip -selection clipboard
-		echo -e "${GREEN}Content copied from line $1 to $2 of $3.${NC}"
+		echo -e "${green}Content copied from line $1 to $2 of $3${nc}."
 	else
-		echo -e "${RED}The file could not be detected or found. Operation canceled.${NC}"
+		echo -e "${red}The file could not be detected or found. Operation canceled${nc}."
 	fi
 fi
 
 if [[ $# -ge 1 && $# -lt 3 ]]; then
-	echo -e "${RED}\e[1mError.${NC}\n"
+	echo -e "${bold_red}Error${nc}.\n"
 
 	echo -e "Use 'copyFromFile --help' to display the Help guide.\n"
 
@@ -116,7 +210,7 @@ if [[ $# -ge 1 && $# -lt 3 ]]; then
 fi
 
 if ! [[ $1 =~ ^[0-9]+$ && $2 =~ ^[0-9]+$ ]]; then
-    	echo -e "${RED}Error:${NC} Lines must be numbers."
+    	echo -e "${red}Error:${nc} Lines must be numbers."
     	exit 1
 fi
 
