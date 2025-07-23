@@ -96,6 +96,16 @@ Its easy. You only need to pass three arguments.
 
 3. The file name.
 
+But you have two arguments:
+
+1. `-a | --all`
+    
+	With this argument only pass the file.
+
+2. `-o | --one-line`
+    
+	This argument needs the line to copy and the file.
+
 
 ### Examples of use
 
@@ -114,14 +124,36 @@ If you created an alias, you can use it in the same way:
 cpff 10 30 file.txt
 ```
 
+
+The next example copies all of the content from the ```file.txt``` file.
+
+```
+copyFromFile --all file.txt
+```
+
+
+Finally, the `--one-line` argument, this argument copies only one line from the file and is easy to use.
+```
+copyFromFile --one-line [Line] [File]
+```
+
+Example:
+
+```
+copyFromFile --one-line 5 file.txt
+```
+
 ### All arguments
 
-```--help```: Shows the help menu
+`-h | --help`: Shows the help menu
 
-```--update```: Updates the program
+`-u | --update`: Updates the program
 
-```--version```: Shows the actual version of the program
+`-v | --version`: Shows the actual version of the program
 
+`-a | --all`: Copies all of the content from the file
+
+`-o | --one-line`: Copies only one line from the file
 
 ## Uninstallation
 
